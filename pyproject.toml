@@ -7,11 +7,11 @@ build-backend = "hatchling.build"
 name = "snip"
 description = "A simple snippet tool"
 readme = "README.md"
-version = "0.2"
+version = "0.3"
 license = { file = "LICENSE" }
 keywords = ["cli", "snippet"]
 dependencies = []
-requires-python = ">= 3.11"
+requires-python = ">= 3.9"
 authors = [
     {name = "Hai Vu", email="haivu2004@gmail.com"}
 ]
@@ -21,7 +21,7 @@ classifiers = [
   #   3 - Alpha
   #   4 - Beta
   #   5 - Production/Stable
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
 
   # Indicate who your project is intended for
   "Intended Audience :: Developers",
