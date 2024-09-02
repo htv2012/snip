@@ -37,3 +37,22 @@ def template_text_file(root: pathlib.Path, template_text: str):
     path.write_text(template_text)
     yield path.name
     path.unlink()
+
+
+@pytest.fixture(scope="session", autouse=True)
+def preserve_config():
+    """Preserve the real ~/.config/snip.json."""
+    # Save state
+    config_path = pathlib.Path("~/.config/snip.json").expanduser()
+    config_found = config_path.exists()
+    saved_content = ""
+    if config_found:
+        saved_content = config_path.read_text()
+
+    yield
+
+    # Restore
+    if config_found:
+        config_path.write_text(saved_content)
+    else:
+        config_path.unlink(missing_ok=True)
