@@ -1,17 +1,15 @@
 # Nice to Have
-- Integrate with fzf to select snippets
+- Integration with fzf
+- Integration with bat
+- Integration with jq
 - Tags
 - Keep a database for metadata (tags, ...)
 - I would be nice if we can display the file using `bat`
 
 # Backlog
-- Fix the required Python version -> 3.9
-- config file
-- Include first run
-- Sensible default
-- Q: Should we ask for a directory to store snippet, or just assume some place?
-- first run: ask where to store snippets
 - Add github workflow to `hatchling build` package for the release
+- Add docs for the tool
+- Add github workflow to upload doc to `readthedocs.com`
 
 # History
 
@@ -21,3 +19,12 @@
 - Implement simple put, get
 - Copy to clipboard
 - Add simple template expansion
+
+2024-09-02
+
+- Fix the required Python version -> 3.9
+- Add config file
+- Include first run, which create the config file if not found
+- Sensible default
+    - config file: `~/.config/snip.json`
+    - data dir: `~/.local/share/snip`
