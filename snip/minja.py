@@ -35,8 +35,7 @@ class Template:
 
     def load_text(self, text: str):
         self.text = text
-        if text is not None:
-            self.names = set(NAME_PATTERN.findall(text))
+        self.names = set(NAME_PATTERN.findall(text))
 
     def render(self, **kwargs):
         self.table = kwargs
