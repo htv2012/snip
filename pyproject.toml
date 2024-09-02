@@ -32,12 +32,30 @@ classifiers = [
 
   # Specify the Python versions you support here.
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
 ]
 
 [project.scripts]
 snip = "snip.cli:main"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+markers = []
+log_cli = true
+log_cli_level = "WARNING"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+ignore = [
+    "D203",  # one-blank-line-before-class
+    "D213",  # multi-line-summary-second-line
+    "COM812",
+    "ISC001",
+]
+select = ["F", "E", "W", "I001"] # pyflakes, pycodestyle, isort
+
+[tool.ruff.lint.isort]
+case-sensitive = true

@@ -1,6 +1,9 @@
 config := $(HOME)/.config/cli_snip.json
 data_dir := $(HOME)/Sync/snip
 
+qa: lint
+	pytest -v
+
 run: lint
 	python3 sn.py put foo
 	python3 sn.py get foo

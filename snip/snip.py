@@ -8,8 +8,10 @@ import shlex
 import string
 import subprocess
 import tempfile
+import shutil
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
+__all__ = ["get", "put"]
 
 
 def copy_to_clipboard(text: str):
@@ -18,9 +20,13 @@ def copy_to_clipboard(text: str):
     if system == "Darwin":
         command = ["pbcopy"]
     elif system == "Linux":
+        if not shutil.which("xsel"):
+            logging.warning("xsel not found, cannot copy")
+            return
         command = ["xsel", "-b"]
     else:
-        raise NotImplementedError(f"for {system}")
+        logging.warning("System not supported: %s. Will not copy", system)
+        return
 
     subprocess.run(command, text=True, input=text)
 
@@ -48,9 +54,7 @@ def edit(text: str, editor: str = None, file_extension: str = None):
     :param file_extension: The file extension such as ".txt"
     :return: The edited text
     """
-    tmp = tempfile.NamedTemporaryFile(
-        mode="w", encoding="utf-8", suffix=file_extension, delete=False
-    )
+    tmp = tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=file_extension, delete=False)
 
     with tmp:
         tmp.write(text)
@@ -80,3 +84,4 @@ def get(name: str, root: pathlib.Path, variables: dict):
     text = template.safe_substitute(variables)
     print(text)
     copy_to_clipboard(text)
+    return text
