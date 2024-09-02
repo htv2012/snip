@@ -5,6 +5,7 @@
 - I would be nice if we can display the file using `bat`
 
 # Backlog
+- Fix the required Python version -> 3.9
 - config file
 - Include first run
 - Sensible default

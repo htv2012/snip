@@ -11,7 +11,7 @@ version = "0.2"
 license = { file = "LICENSE" }
 keywords = ["cli", "snippet"]
 dependencies = []
-requires-python = ">= 3.11"
+requires-python = ">= 3.9"
 authors = [
     {name = "Hai Vu", email="haivu2004@gmail.com"}
 ]
