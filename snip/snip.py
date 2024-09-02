@@ -5,10 +5,11 @@ import os
 import pathlib
 import platform
 import shlex
-import string
+import shutil
 import subprocess
 import tempfile
-import shutil
+
+from . import minja
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 __all__ = ["get", "put"]
@@ -75,13 +76,13 @@ def put(name: str, root: pathlib.Path):
 
 def get(name: str, root: pathlib.Path, variables: dict):
     dest = root / name
-    template = string.Template(dest.read_text())
+    template = minja.Template(dest.read_text())
 
-    for name in template.get_identifiers():
+    for name in template.names:
         if name not in variables:
             variables[name] = input(f"{name}: ")
 
-    text = template.safe_substitute(variables)
+    text = template.render(**variables)
     print(text)
     copy_to_clipboard(text)
     return text
