@@ -29,14 +29,14 @@ class Template:
     """A simple Jinja-like template rendering class."""
 
     def __init__(self, text: Optional[str] = None):
-        self.names = []
+        self.names = set()
         self.table = {}
-        self.load_text(text)
+        self.load_text(text or "")
 
-    def load_text(self, text: Optional[str] = None):
+    def load_text(self, text: str):
         self.text = text
         if text is not None:
-            self.names = NAME_PATTERN.findall(text)
+            self.names = set(NAME_PATTERN.findall(text))
 
     def render(self, **kwargs):
         self.table = kwargs
