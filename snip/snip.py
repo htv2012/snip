@@ -8,6 +8,7 @@ import shlex
 import string
 import subprocess
 import tempfile
+import shutil
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 __all__ = ["get", "put"]
@@ -19,9 +20,13 @@ def copy_to_clipboard(text: str):
     if system == "Darwin":
         command = ["pbcopy"]
     elif system == "Linux":
+        if not shutil.which("xsel"):
+            logging.warning("xsel not found, cannot copy")
+            return
         command = ["xsel", "-b"]
     else:
-        raise NotImplementedError(f"for {system}")
+        logging.warning("System not supported: %s. Will not copy", system)
+        return
 
     subprocess.run(command, text=True, input=text)
 
