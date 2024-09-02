@@ -1,24 +1,21 @@
-# Goals
-- Create a command-line interface (CLI) snip tool
-- Actions: CRUD
-- Configuration file
-    - Where to store database
-- Tags
-- template expansion
-- Copy to clipboard
+# Nice to Have
 - Integrate with fzf to select snippets
-- Each snippet stored in 1 file
+- Tags
 - Keep a database for metadata (tags, ...)
-- Python installable package
 - I would be nice if we can display the file using `bat`
 
 # Backlog
 - config file
+- Include first run
+- Sensible default
+- Q: Should we ask for a directory to store snippet, or just assume some place?
 - first run: ask where to store snippets
+- Add github workflow to `hatchling build` package for the release
 
 # History
 
-## 2024-09-01
+2024-09-01
+
 - Create an installable package
 - Implement simple put, get
 - Copy to clipboard
