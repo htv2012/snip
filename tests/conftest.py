@@ -40,10 +40,9 @@ def template_text_file(root: pathlib.Path, template_text: str):
 
 
 @pytest.fixture(scope="session", autouse=True)
-def preserve_config():
+def preserve_config(config_path):
     """Preserve the real ~/.config/snip.json."""
     # Save state
-    config_path = pathlib.Path("~/.config/snip.json").expanduser()
     config_found = config_path.exists()
     saved_content = ""
     if config_found:
@@ -56,3 +55,10 @@ def preserve_config():
         config_path.write_text(saved_content)
     else:
         config_path.unlink(missing_ok=True)
+
+
+@pytest.fixture(scope="session")
+def config_path():
+    """The path to the config file."""
+    path = pathlib.Path("~/.config/snip.json").expanduser()
+    return path
