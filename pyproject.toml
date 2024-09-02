@@ -7,7 +7,7 @@ build-backend = "hatchling.build"
 name = "snip"
 description = "A simple snippet tool"
 readme = "README.md"
-version = "0.1"
+version = "0.2"
 license = { file = "LICENSE" }
 keywords = ["cli", "snippet"]
 dependencies = []
