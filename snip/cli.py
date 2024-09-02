@@ -4,6 +4,7 @@ import logging.config
 import pathlib
 
 from . import snip
+from .config import DATA_DIR, load
 
 
 def main():
@@ -20,9 +21,8 @@ def main():
     options = parser.parse_args()
     logging.debug("options: %r", options)
 
-    # TODO: Do not hard code, get from config or ask
-    root = pathlib.Path("~/Sync/snip").expanduser()
-    root.mkdir(exist_ok=True)
+    config = load()
+    root = pathlib.Path(config[DATA_DIR])
 
     if options.action == "put":
         snip.put(options.filename, root)
