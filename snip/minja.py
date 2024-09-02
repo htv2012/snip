@@ -5,6 +5,7 @@ name `minja` means to be a mini jinja engine.
 """
 
 import re
+from typing import Optional
 
 __all__ = ["Template"]
 
@@ -27,14 +28,15 @@ NAME_PATTERN = re.compile(
 class Template:
     """A simple Jinja-like template rendering class."""
 
-    def __init__(self, text=None):
-        self.text = text
+    def __init__(self, text: Optional[str] = None):
         self.names = []
         self.table = {}
+        self.load_text(text)
 
-    def load_text(self, text: str):
+    def load_text(self, text: Optional[str] = None):
         self.text = text
-        self.names = NAME_PATTERN.findall(text)
+        if text is not None:
+            self.names = NAME_PATTERN.findall(text)
 
     def render(self, **kwargs):
         self.table = kwargs
