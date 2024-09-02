@@ -28,7 +28,7 @@ def text_file_name(root: pathlib.Path, plain_text):
 
 @pytest.fixture
 def template_text():
-    return "${flower} are ${color}"
+    return "{{flower}} are {{color}}"
 
 
 @pytest.fixture
