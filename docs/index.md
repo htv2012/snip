@@ -28,7 +28,7 @@ At this point, `snip` will invoke the text editor (as defined by the
 to this file. `snip` uses a template engine which is similar to
 `Jinja`. Bedlow is a sample of file `logvar.py` after editing:
 
-    logging.debug("{{label}}=%r", {{var_name}})
+    {% raw logging.debug("{{label}}=%r", {{var_name}}) %}
 
 The snippet file `logvar.py` resides in the data directory which
 defaults to `~/.local/share/snip`. More about this directory later in
