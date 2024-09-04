@@ -6,8 +6,10 @@ import pathlib
 import shutil
 import subprocess
 import tempfile
+from importlib.metadata import version
 
 from . import snip
+from . import __version__
 from .config import DATA_DIR, load
 
 
@@ -35,6 +37,7 @@ def select_file(root: pathlib.Path):
 
 def main():
     parser = argparse.ArgumentParser(prog="snip")
+    parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
     sub_parser = parser.add_subparsers(dest="action", required=True)
 
     put_parser = sub_parser.add_parser("put")
