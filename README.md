@@ -31,3 +31,5 @@ Version 0.4.1 2024-09-03
 - Integration with fzf
 - Add `--version` flags
 
+Version 0.4.2 2024-09-03
+- Fix pyproject.toml to work with `hatchling build`
