@@ -29,6 +29,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Show version
+      run: |
+        python -m snip.cli --version
+        echo "Hatchling report version as $(hatchling version)"
     - name: Lint with ruff
       run: |
         ruff check --output-format=github .

@@ -7,7 +7,6 @@ build-backend = "hatchling.build"
 name = "snip"
 description = "A simple snippet tool"
 readme = "README.md"
-version = "0.3"
 license = { file = "LICENSE" }
 keywords = ["cli", "snippet"]
 dependencies = []
@@ -40,6 +39,9 @@ classifiers = [
 
 [project.scripts]
 snip = "snip.cli:main"
+
+[tool.hatch.version]
+path = "snip/__init__.py"
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers"
