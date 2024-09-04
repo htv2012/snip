@@ -6,10 +6,8 @@ import pathlib
 import shutil
 import subprocess
 import tempfile
-from importlib.metadata import version
 
-from . import snip
-from . import __version__
+from . import __version__, snip
 from .config import DATA_DIR, load
 
 
