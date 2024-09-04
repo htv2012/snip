@@ -32,6 +32,7 @@ jobs:
     - name: Show version
       run: |
         python -m snip.cli --version
+        hatchling version
     - name: Lint with ruff
       run: |
         ruff check --output-format=github .
