@@ -1,10 +1,8 @@
 # Nice to Have
-- Integration with fzf
 - Integration with bat
 - Integration with jq
 - Tags
 - Keep a database for metadata (tags, ...)
-- I would be nice if we can display the file using `bat`
 
 # Backlog
 - Add github workflow to `hatchling build` package for the release
@@ -20,7 +18,7 @@
 - Copy to clipboard
 - Add simple template expansion
 
-2024-09-02
+version 0.3 2024-09-02
 
 - Fix the required Python version -> 3.9
 - Add config file
@@ -28,3 +26,8 @@
 - Sensible default
     - config file: `~/.config/snip.json`
     - data dir: `~/.local/share/snip`
+
+Version 0.4.1 2024-09-03
+- Integration with fzf
+- Add `--version` flags
+
