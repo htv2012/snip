@@ -4,7 +4,8 @@ some operating systems.)
 
 # Installation
 
-Currently, we do not publish this package to [PyPI] so the installation step is a little involved.
+Currently, we do not publish this package to [PyPI] so the installation
+step is a little involved.
 
 1. Navigate the the [Releases] page
 2. Click to select a release, preferably the latest
