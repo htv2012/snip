@@ -26,7 +26,7 @@ For example:
 At this point, `snip` will invoke the text editor (as defined by the
 `$EDITOR` environment variable) and the user can start adding content
 to this file. `snip` uses a template engine which is similar to
-`Jinja`. Bedlow is a sample of file `logvar.py` after editing:
+`Jinja`. Below is a sample of file `logvar.py` after editing:
 
     {% raw %}
     logging.debug("{{label}}=%r", {{var_name}})
@@ -72,7 +72,7 @@ Upon the first run, `snip` will create a configuration file
 
 `snip` stores snippets into the `data-dir` directory. User can edit this
 file and choose a different location, such as a folder within a Dropbox
-directory to allow synchronization accross many hosts.
+directory to allow synchronization across many hosts.
 
 
 [PyPI]: https://pypi.org/
