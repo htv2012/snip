@@ -1,10 +1,10 @@
 # Road Map
 
-# Backlog
+## Backlog
 - Add github workflow to `hatchling build` package for the release
 - Publish to readthedocs
 
-# Nice to Have
+## Nice to Have
 - Integration with bat
 - Integration with jq
 
