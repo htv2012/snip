@@ -8,6 +8,6 @@ from .snip import get, put
 #     hatchling version        # show
 #     hatchling version 0.4.2  # set
 # ======================================================================
-__version__ = "0.4.4"
+__version__ = "0.4.5"
 
 __all__ = [get, put]
