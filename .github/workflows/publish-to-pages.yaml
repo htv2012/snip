@@ -32,7 +32,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Copy Readme to docs
         run: |
-          cp ./README.md ./docs/index.html
+          cp ./README.md ./docs/index.md
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
