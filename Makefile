@@ -1,6 +1,9 @@
 config := $(HOME)/.config/cli_snip.json
 data_dir := $(HOME)/Sync/snip
 
+build:
+	hatchling build
+
 qa: lint
 	pytest -v
 
