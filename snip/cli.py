@@ -33,10 +33,19 @@ def select_file(root: pathlib.Path):
     return selected
 
 
+def list_files(root: pathlib.Path):
+    for path in root.rglob("*"):
+        if path.is_dir():
+            continue
+        print(path.relative_to(root))
+
+
 def main():
     parser = argparse.ArgumentParser(prog="snip")
     parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
     sub_parser = parser.add_subparsers(dest="action", required=True)
+
+    sub_parser.add_parser("ls")
 
     put_parser = sub_parser.add_parser("put")
     put_parser.add_argument("filename")
@@ -53,6 +62,8 @@ def main():
 
     if options.action == "put":
         snip.put(options.filename, root)
+    elif options.action == "ls":
+        list_files(root)
     elif options.action == "get":
         if options.file is None:
             options.file = select_file(root)
