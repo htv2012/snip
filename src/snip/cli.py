@@ -34,7 +34,7 @@ def select_file(root: pathlib.Path):
 
 
 def list_files(root: pathlib.Path):
-    for path in root.rglob("*"):
+    for path in sorted(root.rglob("*")):
         if path.is_dir():
             continue
         print(path.relative_to(root))
@@ -53,7 +53,7 @@ def main():
     put_parser.add_argument("filename")
 
     get_parser = sub_parser.add_parser("get")
-    get_parser.add_argument("-f", "--file")
+    get_parser.add_argument("file", nargs="?")
     get_parser.add_argument("-d", "--define", nargs="*", action="extend", default=[])
 
     options = parser.parse_args()
