@@ -7,12 +7,12 @@ import shutil
 import subprocess
 import tempfile
 
-from . import __version__, snip
-from .config import DATA_DIR, load
+from . import __version__, config, snip
 
 
 def select_file(root: pathlib.Path):
     """Select a file from data dir using fzf."""
+    # TODO: Handle case where fzf not found better
     if not shutil.which("fzf"):
         return None
 
@@ -33,26 +33,38 @@ def select_file(root: pathlib.Path):
     return selected
 
 
-def main():
+def parse_command_line():
     parser = argparse.ArgumentParser(prog="snip")
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s " + __version__
+    )
     sub_parser = parser.add_subparsers(dest="action", required=True)
 
+    # Sub-command: get
+    get_parser = sub_parser.add_parser("get")
+    get_parser.add_argument("file", nargs="?")
+    get_parser.add_argument("-d", "--define", nargs="*", action="extend", default=[])
+
+    # Sub-command: ls
+    sub_parser.add_parser("ls")
+
+    # Sub-command: put
     put_parser = sub_parser.add_parser("put")
     put_parser.add_argument("filename")
 
-    get_parser = sub_parser.add_parser("get")
-    get_parser.add_argument("-f", "--file")
-    get_parser.add_argument("-d", "--define", nargs="*", action="extend", default=[])
-
     options = parser.parse_args()
     logging.debug("options: %r", options)
+    return options
 
-    config = load()
-    root = pathlib.Path(config[DATA_DIR])
+
+def main():
+    options = parse_command_line()
+    root = config.get_data_dir()
 
     if options.action == "put":
         snip.put(options.filename, root)
+    elif options.action == "ls":
+        snip.ls(root)
     elif options.action == "get":
         if options.file is None:
             options.file = select_file(root)

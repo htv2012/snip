@@ -28,3 +28,10 @@ def load() -> dict:
     pathlib.Path(config[DATA_DIR]).mkdir(exist_ok=True)
 
     return config
+
+
+def get_data_dir() -> pathlib.Path:
+    """Load the configuration file and return the data directory."""
+    global DATA_DIR
+    data = load()
+    return pathlib.Path(data[DATA_DIR])

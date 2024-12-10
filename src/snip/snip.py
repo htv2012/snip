@@ -12,10 +12,11 @@ import tempfile
 from . import minja
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
-__all__ = ["get", "put"]
+__all__ = ["get", "put", "ls"]
 
 
 def copy_to_clipboard(text: str):
+    """Copy text to the system's clipboard."""
     system = platform.system()
     command = []
     if system == "Darwin":
@@ -26,7 +27,7 @@ def copy_to_clipboard(text: str):
             return
         command = ["xsel", "-b"]
     else:
-        logging.warning("System not supported: %s. Will not copy", system)
+        logging.warning("System not supported: %s. cannot copy", system)
         return
 
     subprocess.run(command, text=True, input=text)
@@ -55,7 +56,9 @@ def edit(text: str, editor: str = None, file_extension: str = None):
     :param file_extension: The file extension such as ".txt"
     :return: The edited text
     """
-    tmp = tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=file_extension, delete=False)
+    tmp = tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", suffix=file_extension, delete=False
+    )
 
     with tmp:
         tmp.write(text)
@@ -70,11 +73,13 @@ def edit(text: str, editor: str = None, file_extension: str = None):
 
 
 def put(name: str, root: pathlib.Path):
+    """Invoke editor to allow the user to create/edit a file."""
     dest = root / name
     edit_file(dest)
 
 
 def get(name: str, root: pathlib.Path, variables: dict):
+    """Get the content of a file, with variables interpolation."""
     dest = root / name
     template = minja.Template(dest.read_text())
 
@@ -86,3 +91,11 @@ def get(name: str, root: pathlib.Path, variables: dict):
     print(text)
     copy_to_clipboard(text)
     return text
+
+
+def ls(root: pathlib.Path):
+    """List files in root."""
+    for path in sorted(root.rglob("*")):
+        if path.is_dir():
+            continue
+        print(path.relative_to(root))

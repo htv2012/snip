@@ -14,34 +14,29 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Show version
-      run: |
-        python -m snip.cli --version
-        echo "Hatchling report version as $(hatchling version)"
-    - name: Lint with ruff
-      run: |
-        ruff check --output-format=github .
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Show uv version
+      run: uv --version
+
+    - name: Show snip version
+      run: make version
+
+    - name: Static analysis
+      run: make lint
+
     - name: Test with pytest
-      run: |
-        pytest
+      run: uv run pytest

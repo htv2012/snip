@@ -1,33 +1,34 @@
-config := $(HOME)/.config/cli_snip.json
-data_dir := $(HOME)/Sync/snip
+run: lint
+	uv run snip ls
 
-build:
-	hatchling build
+build: lint
+	uv build
 
 qa: lint
 	pytest -v
 
-run: lint
-	python3 sn.py put foo
-	python3 sn.py get foo
-
 lint: format
-	ruff check . --fix
+	uv run ruff check . --fix
 
 format:
-	ruff check --select I --fix .
-	ruff format .
+	uv run ruff check --select I --fix .
+	uv run ruff format .
 
-rmconfig:
-	-rm $(config)
+version:
+	@echo "Version reported by snip:"
+	@uv run snip --version
 
-catconfig:
-	jq . $(config)
+	@echo ""
+	@echo "Version reported by hatchling:"
+	@uv run hatchling version
 
-ls:
-	ls -l $(data_dir)
+	@echo ""
+	@echo To set the version, run 
+	@echo "    uv run hatchling version <new>"
+	@echo "For example:"
+	@echo "    uv run hatchling version 0.5.14"
 
 clean:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -delete
-	rm -fr build
+	rm -fr build dist .venv .ruff_cache

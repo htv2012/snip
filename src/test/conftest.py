@@ -42,6 +42,7 @@ def template_text_file(root: pathlib.Path, template_text: str):
 @pytest.fixture(scope="session", autouse=True)
 def preserve_config(config_path):
     """Preserve the real ~/.config/snip.json."""
+    # TODO: If config file is a symlink, saving state this way might not work
     # Save state
     config_found = config_path.exists()
     saved_content = ""
