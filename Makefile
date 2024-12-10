@@ -1,33 +1,23 @@
 config := $(HOME)/.config/snip.json
 data_dir := $(HOME)/Sync/snip-data
 
-build:
-	hatchling build
+run: lint
+	uv run snip ls
+
+build: lint
+	uv build
 
 qa: lint
 	pytest -v
 
-run: lint
-	python3 sn.py put foo
-	python3 sn.py get foo
-
 lint: format
-	ruff check . --fix
+	uv run ruff check . --fix
 
 format:
-	ruff check --select I --fix .
-	ruff format .
-
-rmconfig:
-	-rm $(config)
-
-catconfig:
-	jq . $(config)
-
-ls:
-	ls -l $(data_dir)
+	uv run ruff check --select I --fix .
+	uv run ruff format .
 
 clean:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -delete
-	rm -fr build
+	rm -fr build dist .venv .ruff_cache

@@ -7,12 +7,12 @@ import shutil
 import subprocess
 import tempfile
 
-from . import __version__, snip
-from .config import DATA_DIR, load
+from . import __version__, config, snip
 
 
 def select_file(root: pathlib.Path):
     """Select a file from data dir using fzf."""
+    # TODO: Handle case where fzf not found better
     if not shutil.which("fzf"):
         return None
 
@@ -34,6 +34,7 @@ def select_file(root: pathlib.Path):
 
 
 def list_files(root: pathlib.Path):
+    """List files in root."""
     for path in sorted(root.rglob("*")):
         if path.is_dir():
             continue
@@ -59,8 +60,8 @@ def main():
     options = parser.parse_args()
     logging.debug("options: %r", options)
 
-    config = load()
-    root = pathlib.Path(config[DATA_DIR])
+    settings = config.load()
+    root = pathlib.Path(settings[config.DATA_DIR])
 
     if options.action == "put":
         snip.put(options.filename, root)
