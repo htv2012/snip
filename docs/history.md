@@ -1,6 +1,10 @@
 # History
 
-version 0.5.1 2024-12-10
+Version 0.5.2 2024-12-10
+- Use static version
+- Single truth in pyproject.toml
+
+Version 0.5.1 2024-12-10
 - Switch tooling to uv
 - Introduce the ls sub command
 
