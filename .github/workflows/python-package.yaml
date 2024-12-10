@@ -33,7 +33,7 @@ jobs:
       run: uv --version
 
     - name: Show snip version
-      run: uv run snip --version
+      run: make version
 
     - name: Static analysis
       run: make lint
