@@ -1,6 +1,3 @@
-config := $(HOME)/.config/snip.json
-data_dir := $(HOME)/Sync/snip-data
-
 run: lint
 	uv run snip ls
 
