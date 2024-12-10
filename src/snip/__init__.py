@@ -1,4 +1,8 @@
-from .snip import get, put
+from .snip import get, ls, put
 
-__version__ = "0.4.6"
-__all__ = [get, put]
+__version__ = "0.5.0"
+__all__ = [
+    "get",
+    "ls",
+    "put",
+]

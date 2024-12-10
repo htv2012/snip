@@ -33,14 +33,6 @@ def select_file(root: pathlib.Path):
     return selected
 
 
-def list_files(root: pathlib.Path):
-    """List files in root."""
-    for path in sorted(root.rglob("*")):
-        if path.is_dir():
-            continue
-        print(path.relative_to(root))
-
-
 def main():
     parser = argparse.ArgumentParser(prog="snip")
     parser.add_argument(
@@ -66,7 +58,7 @@ def main():
     if options.action == "put":
         snip.put(options.filename, root)
     elif options.action == "ls":
-        list_files(root)
+        snip.ls(root)
     elif options.action == "get":
         if options.file is None:
             options.file = select_file(root)
