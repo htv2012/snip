@@ -13,7 +13,6 @@ def test_config_exists(tmp_path, config_path):
         json.dump(
             {
                 "data-dir": data_dir,
-                "extra": True,
             },
             stream,
         )
@@ -25,7 +24,6 @@ def test_config_exists(tmp_path, config_path):
     assert config_path.exists()
     assert pathlib.Path(config["data-dir"]).exists()
     assert config["data-dir"] == str(data_dir)
-    assert config["extra"] is True
 
 
 def test_config_not_exist(config_path):

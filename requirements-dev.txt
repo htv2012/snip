@@ -1,5 +1,0 @@
-flake8
-hatchling
-pytest
-pytest-pythonpath
-ruff
