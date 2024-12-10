@@ -1,5 +1,5 @@
-config := $(HOME)/.config/cli_snip.json
-data_dir := $(HOME)/Sync/snip
+config := $(HOME)/.config/snip.json
+data_dir := $(HOME)/Sync/snip-data
 
 build:
 	hatchling build

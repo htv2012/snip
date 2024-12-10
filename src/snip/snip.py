@@ -55,7 +55,9 @@ def edit(text: str, editor: str = None, file_extension: str = None):
     :param file_extension: The file extension such as ".txt"
     :return: The edited text
     """
-    tmp = tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=file_extension, delete=False)
+    tmp = tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", suffix=file_extension, delete=False
+    )
 
     with tmp:
         tmp.write(text)
