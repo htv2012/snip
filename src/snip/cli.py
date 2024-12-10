@@ -1,4 +1,5 @@
 import argparse
+import importlib.metadata
 import logging
 import logging.config
 import os
@@ -7,7 +8,7 @@ import shutil
 import subprocess
 import tempfile
 
-from . import __version__, config, snip
+from . import config, snip
 
 
 def select_file(root: pathlib.Path):
@@ -36,7 +37,10 @@ def select_file(root: pathlib.Path):
 def parse_command_line():
     parser = argparse.ArgumentParser(prog="snip")
     parser.add_argument(
-        "-v", "--version", action="version", version="%(prog)s " + __version__
+        "-v",
+        "--version",
+        action="version",
+        version="%(prog)s " + importlib.metadata.version("snip"),
     )
     sub_parser = parser.add_subparsers(dest="action", required=True)
 

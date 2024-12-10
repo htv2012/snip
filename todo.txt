@@ -1,2 +1,3 @@
 - Error when directory is not found or empty, get
 - Tests do not preserve symlink file
+- Use click
