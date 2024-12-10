@@ -33,27 +33,33 @@ def select_file(root: pathlib.Path):
     return selected
 
 
-def main():
+def parse_command_line():
     parser = argparse.ArgumentParser(prog="snip")
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s " + __version__
     )
     sub_parser = parser.add_subparsers(dest="action", required=True)
 
-    sub_parser.add_parser("ls")
-
-    put_parser = sub_parser.add_parser("put")
-    put_parser.add_argument("filename")
-
+    # Sub-command: get
     get_parser = sub_parser.add_parser("get")
     get_parser.add_argument("file", nargs="?")
     get_parser.add_argument("-d", "--define", nargs="*", action="extend", default=[])
 
+    # Sub-command: ls
+    sub_parser.add_parser("ls")
+
+    # Sub-command: put
+    put_parser = sub_parser.add_parser("put")
+    put_parser.add_argument("filename")
+
     options = parser.parse_args()
     logging.debug("options: %r", options)
+    return options
 
-    settings = config.load()
-    root = pathlib.Path(settings[config.DATA_DIR])
+
+def main():
+    options = parse_command_line()
+    root = config.get_data_dir()
 
     if options.action == "put":
         snip.put(options.filename, root)
