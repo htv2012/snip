@@ -1,11 +1,19 @@
 # History
 
-2024-09-01
+Version 0.5.2 2024-12-10
+- Use static version
+- Single truth in pyproject.toml
 
-- Create an installable package
-- Implement simple put, get
-- Copy to clipboard
-- Add simple template expansion
+Version 0.5.1 2024-12-10
+- Switch tooling to uv
+- Introduce the ls sub command
+
+Version 0.4.2 2024-09-03
+- Fix pyproject.toml to work with `hatchling build`
+
+Version 0.4.1 2024-09-03
+- Integration with fzf
+- Add `--version` flags
 
 version 0.3 2024-09-02
 
@@ -16,9 +24,10 @@ version 0.3 2024-09-02
     - config file: `~/.config/snip.json`
     - data dir: `~/.local/share/snip`
 
-Version 0.4.1 2024-09-03
-- Integration with fzf
-- Add `--version` flags
+2024-09-01
 
-Version 0.4.2 2024-09-03
-- Fix pyproject.toml to work with `hatchling build`
+- Create an installable package
+- Implement simple put, get
+- Copy to clipboard
+- Add simple template expansion
+
