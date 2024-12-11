@@ -28,9 +28,9 @@ At this point, `snip` will invoke the text editor (as defined by the
 to this file. `snip` uses a template engine which is similar to
 `Jinja`. Below is a sample of file `logvar.py` after editing:
 
-    {% raw %}
-    logging.debug("{{label}}=%r", {{var_name}})
-    {% endraw %}
+```python
+logging.debug("{{ name }}=%r", {{ name }})
+```
 
 The snippet file `logvar.py` resides in the data directory which
 defaults to `~/.local/share/snip`. More about this directory later in
@@ -40,24 +40,24 @@ the configuration section.
 
 To retrieve a snippet, issue the following
 
-    snip get -f <filename>
+    snip get <filename>
 
 For example:
 
-    snip get -f logvar.py
+    snip get logvar.py
 
 In this example, `snip` will ask the user for the values of `label` and
 `var_name`, which are defined in `logvar.py`. User can supply the values
 from the command line:
 
     
-    snip get -f logvar.py -d label="Port number" -d var_name=port_number
+    snip get logvar.py -d var_name=port_number
 
 With the above command, `snip` will not ask for those values. It will
 output the following to the console as well as placing it into the
 pasteboard:
 
-    logging.debug("Port number=%r", port_number)
+    logging.debug("port_number=%r", port_number)
 
 # Configuration
 
