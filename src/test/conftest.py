@@ -40,26 +40,31 @@ def template_text_file(root: pathlib.Path, template_text: str):
 
 
 @pytest.fixture(scope="session", autouse=True)
-def preserve_config(config_path):
-    """Preserve the real ~/.config/snip.json."""
-    # TODO: If config file is a symlink, saving state this way might not work
-    # Save state
+def preserve_config(config_path: pathlib.Path):
+    """Preserve the real config file."""
     config_found = config_path.exists()
-    saved_content = ""
+    
+    # Save state: We rename the config file, so if it was a
+    # symbolic link, it got restored as such. Saving by just
+    # saving the content does not preserve the link.
     if config_found:
-        saved_content = config_path.read_text()
+        saved_path = config_path.with_stem("snip-saved")
+        saved_path.unlink(missing_ok=True)
+        config_path.rename(saved_path)
+        config_path.write_bytes(saved_path.read_bytes())
 
     yield
 
     # Restore
     if config_found:
-        config_path.write_text(saved_content)
+        config_path.unlink(missing_ok=True)
+        saved_path.rename(config_path)
     else:
         config_path.unlink(missing_ok=True)
 
 
 @pytest.fixture(scope="session")
-def config_path():
+def config_path() -> pathlib.Path:
     """The path to the config file."""
     path = pathlib.Path("~/.config/snip.json").expanduser()
     return path
