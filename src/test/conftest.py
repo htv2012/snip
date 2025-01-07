@@ -43,7 +43,7 @@ def template_text_file(root: pathlib.Path, template_text: str):
 def preserve_config(config_path: pathlib.Path):
     """Preserve the real config file."""
     config_found = config_path.exists()
-    
+
     # Save state: We rename the config file, so if it was a
     # symbolic link, it got restored as such. Saving by just
     # saving the content does not preserve the link.
