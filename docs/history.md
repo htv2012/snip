@@ -1,5 +1,8 @@
 # History
 
+Version 0.5.3 2025-01-17
+- Show root dir in `ls`
+
 Version 0.5.2 2024-12-10
 - Use static version
 - Single truth in pyproject.toml

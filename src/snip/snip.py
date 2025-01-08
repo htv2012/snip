@@ -95,7 +95,11 @@ def get(name: str, root: pathlib.Path, variables: dict):
 
 def ls(root: pathlib.Path):
     """List files in root."""
-    for path in sorted(root.rglob("*")):
-        if path.is_dir():
-            continue
-        print(path.relative_to(root))
+    print(f"Data path: {root}\n")
+
+    paths = sorted(
+        path.relative_to(root) for path in root.rglob("*") if not path.is_dir()
+    )
+
+    for path in paths:
+        print(path)

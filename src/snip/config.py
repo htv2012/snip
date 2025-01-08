@@ -24,8 +24,8 @@ def load() -> dict:
     # Ensure this key exists
     config.setdefault(DATA_DIR, str(DEFAULT_DATA_DIR))
 
-    # Ensure the data dir exists
-    pathlib.Path(config[DATA_DIR]).mkdir(exist_ok=True)
+    # Ensure the data dir exists. Create parent directories if needed
+    pathlib.Path(config[DATA_DIR]).mkdir(parents=True, exist_ok=True)
 
     return config
 
