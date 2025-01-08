@@ -1,6 +1,8 @@
-all: run
+.PHONY: all build clean format lint run test version
 
-build: lint
+all: format lint test run
+
+build: lint test
 	uv build
 
 clean:
@@ -12,13 +14,10 @@ format:
 	uv run ruff check --select I --fix .
 	uv run ruff format .
 
-lint: format
+lint:
 	uv run ruff check . --fix
 
-qa: lint
-	pytest -v
-
-run: lint
+run: 
 	uv run snip ls
 
 test:
