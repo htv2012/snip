@@ -7,7 +7,7 @@ authors = [
 ]
 requires-python = ">=3.9"
 dependencies = []
-version = "0.5.3"
+version = "0.5.4"
 
 [project.scripts]
 snip = "snip.cli:main"

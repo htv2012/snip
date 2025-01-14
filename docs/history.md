@@ -1,6 +1,9 @@
 # History
 
-Version 0.5.3 2025-01-17
+Version 0.5.4 2025-01-13
+- Add more template tests
+
+Version 0.5.3 2025-01-07
 - Show root dir in `ls`
 
 Version 0.5.2 2024-12-10
