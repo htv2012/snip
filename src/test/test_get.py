@@ -1,12 +1,12 @@
-from snip import get
+import snip
 
 
 def test_plain_text(root, text_file_name: str, plain_text: str):
-    assert get(text_file_name, root, {}) == plain_text
+    assert snip.get(text_file_name, root, {}) == plain_text
 
 
 def test_template_text(root, template_text_file: str, template_text: str):
-    actual = get(
+    actual = snip.get(
         name=template_text_file,
         root=root,
         variables={
