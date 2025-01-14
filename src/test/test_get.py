@@ -10,7 +10,7 @@ def test_template_text(root, template_text_file: str, template_text: str):
         name=template_text_file,
         root=root,
         variables={
-            "flower": "Roses",
+            "flowers": "Roses",
             "color": "red",
         },
     )

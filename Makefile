@@ -20,7 +20,7 @@ lint:
 run: 
 	uv run snip ls
 
-test:
+test: lint format
 	uv run pytest -v
 
 version:
