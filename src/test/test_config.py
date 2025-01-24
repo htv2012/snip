@@ -1,7 +1,11 @@
 import json
 import pathlib
 
-from snip.config import load
+import pytest
+
+import snip.config
+
+HOME_DIR_STR = str(pathlib.Path.home())
 
 
 def test_config_exists(tmp_path, config_path):
@@ -18,7 +22,7 @@ def test_config_exists(tmp_path, config_path):
         )
 
     # Act
-    config = load()
+    config = snip.config.load()
 
     # Verify
     assert config_path.exists()
@@ -33,10 +37,22 @@ def test_config_not_exist(config_path):
     config_path.unlink(missing_ok=True)
 
     # Act
-    config = load()
+    config = snip.config.load()
 
     # Verify
     assert config_path.exists()
     assert isinstance(config, dict)
     assert "data-dir" in config
     assert pathlib.Path(config["data-dir"]).exists()
+
+
+@pytest.mark.parametrize(
+    "in_path,expected",
+    [
+        pytest.param("$HOME", HOME_DIR_STR, id="home"),
+        pytest.param("${HOME}", HOME_DIR_STR, id="home_in_braces"),
+        pytest.param("~", HOME_DIR_STR, id="tilde"),
+    ],
+)
+def test_normalize_path(in_path, expected):
+    assert snip.config.normalize_path(in_path) == expected
