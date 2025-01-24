@@ -5,7 +5,8 @@ import pytest
 
 import snip.config
 
-HOME_DIR_STR = str(pathlib.Path.home())
+HOME_DIR = str(pathlib.Path.home())
+CONFIG_DIR = f"{HOME_DIR}/.config"
 
 
 def test_config_exists(tmp_path, config_path):
@@ -49,10 +50,14 @@ def test_config_not_exist(config_path):
 @pytest.mark.parametrize(
     "in_path,expected",
     [
-        pytest.param("$HOME", HOME_DIR_STR, id="home"),
-        pytest.param("${HOME}", HOME_DIR_STR, id="home_in_braces"),
-        pytest.param("~", HOME_DIR_STR, id="tilde"),
+        pytest.param("$HOME", HOME_DIR, id="home"),
+        pytest.param("${HOME}", HOME_DIR, id="home_with_braces"),
+        pytest.param("~", HOME_DIR, id="home_with_tilde"),
+        pytest.param("$HOME/.config", CONFIG_DIR, id="config_dir"),
+        pytest.param("${HOME}/.config", CONFIG_DIR, id="config_dir_with_braces"),
+        pytest.param("~/.config", CONFIG_DIR, id="config_dir_with_tilde"),
     ],
 )
 def test_normalize_path(in_path, expected):
+    """Verify normalize_path()."""
     assert snip.config.normalize_path(in_path) == expected
