@@ -12,7 +12,7 @@ DEFAULT_DATA_DIR = pathlib.Path("~/.local/share/snip").expanduser()
 DEFAULT_CONFIG = {DATA_DIR: str(DEFAULT_DATA_DIR)}
 
 
-def normalize_path(path: str):
+def normalize_path(path: str) -> str:
     """Normalize the path.
 
     Convert ~, $HOME, ${HOME} to the home dir
@@ -39,11 +39,8 @@ def load() -> dict:
     with open(config_path, "r", encoding="utf-8") as stream:
         config = json.load(stream)
 
-    # Ensure this key exists
-    # config.setdefault(DATA_DIR, str(DEFAULT_DATA_DIR))
+    # Ensure this key exists and normalized
     data_dir = config.get(DATA_DIR, DEFAULT_DATA_DIR)
-    # data_dir = string.Template(data_dir).substitute(**os.environ)
-    # data_dir = str(pathlib.Path(data_dir).expanduser())
     data_dir = normalize_path(data_dir)
     config[DATA_DIR] = data_dir
     LOGGER.debug("data-dir=%s", config[DATA_DIR])
