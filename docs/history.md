@@ -1,5 +1,8 @@
 # History
 
+Version 0.5.5 2025-01-23
+- Add template expansion to config file
+
 Version 0.5.4 2025-01-13
 - Add more template tests
 

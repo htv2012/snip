@@ -11,8 +11,10 @@ import tempfile
 
 from . import minja
 
-logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 __all__ = ["get", "put", "ls"]
+
+logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
+LOGGER = logging.getLogger("root.snip")
 
 
 def copy_to_clipboard(text: str):
@@ -23,11 +25,11 @@ def copy_to_clipboard(text: str):
         command = ["pbcopy"]
     elif system == "Linux":
         if not shutil.which("xsel"):
-            logging.warning("xsel not found, cannot copy")
+            LOGGER.warning("xsel not found, cannot copy")
             return
         command = ["xsel", "-b"]
     else:
-        logging.warning("System not supported: %s. cannot copy", system)
+        LOGGER.warning("System not supported: %s. cannot copy", system)
         return
 
     subprocess.run(command, text=True, input=text)

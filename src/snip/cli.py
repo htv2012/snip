@@ -10,6 +10,9 @@ import tempfile
 
 from . import config, snip
 
+logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
+LOGGER = logging.getLogger("root.cli")
+
 
 def select_file(root: pathlib.Path):
     """Select a file from data dir using fzf."""
@@ -28,7 +31,7 @@ def select_file(root: pathlib.Path):
         )
         stdout.seek(0)
         selected = stdout.read().strip()
-        logging.debug("selected=%r", selected)
+        LOGGER.debug("selected=%r", selected)
 
     os.chdir(here)
     return selected
@@ -57,7 +60,7 @@ def parse_command_line():
     put_parser.add_argument("filename")
 
     options = parser.parse_args()
-    logging.debug("options: %r", options)
+    LOGGER.debug("options: %r", options)
     return options
 
 
@@ -75,7 +78,7 @@ def main():
         if options.file is None:
             raise SystemExit("Please specify a file name via -f, or install fzf")
         variables = dict(token.split("=") for token in options.define)
-        logging.debug("variables=%r", variables)
+        LOGGER.debug("variables=%r", variables)
         snip.get(options.file, root, variables)
 
 
