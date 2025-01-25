@@ -1,5 +1,8 @@
 # History
 
+Version 0.5.6 2025-01-25
+- Handle data-dir not found
+
 Version 0.5.5 2025-01-23
 - Add template expansion to config file
 
