@@ -6,9 +6,11 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import tempfile
 
 from . import config, snip
+from .pathtools import is_empty_dir
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 LOGGER = logging.getLogger("root.cli")
@@ -16,9 +18,12 @@ LOGGER = logging.getLogger("root.cli")
 
 def select_file(root: pathlib.Path):
     """Select a file from data dir using fzf."""
+    if is_empty_dir(root):
+        raise ValueError(f"Data directory {root} is empty")
+
     # TODO: Handle case where fzf not found better
     if not shutil.which("fzf"):
-        return None
+        raise ValueError("fzf is not found, please install")
 
     here = os.getcwd()
     os.chdir(root)
@@ -66,21 +71,28 @@ def parse_command_line():
 
 def main():
     options = parse_command_line()
-    root = config.get_data_dir()
+    root = config.get_or_create_data_dir()
 
     if options.action == "put":
         snip.put(options.filename, root)
     elif options.action == "ls":
         snip.ls(root)
     elif options.action == "get":
-        if options.file is None:
-            options.file = select_file(root)
-        if options.file is None:
-            raise SystemExit("Please specify a file name via -f, or install fzf")
+        try:
+            snippet_file = options.file or select_file(root)
+        except ValueError as error:
+            print(f"{error}", file=sys.stderr)
+            return 1
         variables = dict(token.split("=") for token in options.define)
         LOGGER.debug("variables=%r", variables)
-        snip.get(options.file, root, variables)
+        try:
+            snip.get(snippet_file, root, variables)
+        except FileNotFoundError:
+            print(f"Snippet file not found: {snippet_file}", file=sys.stderr)
+            return 1
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
