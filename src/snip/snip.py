@@ -2,34 +2,11 @@
 import logging
 import logging.config
 import pathlib
-import platform
-import shutil
-import subprocess
 
-from . import editor, minja
-
-__all__ = ["get", "put", "ls"]
+from . import desktop, editor, minja
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 LOGGER = logging.getLogger("root.snip")
-
-
-def copy_to_clipboard(text: str):
-    """Copy text to the system's clipboard."""
-    system = platform.system()
-    command = []
-    if system == "Darwin":
-        command = ["pbcopy"]
-    elif system == "Linux":
-        if not shutil.which("xsel"):
-            LOGGER.warning("xsel not found, cannot copy")
-            return
-        command = ["xsel", "-b"]
-    else:
-        LOGGER.warning("System not supported: %s. cannot copy", system)
-        return
-
-    subprocess.run(command, text=True, input=text)
 
 
 def put(name: str, root: pathlib.Path):
@@ -49,7 +26,7 @@ def get(name: str, root: pathlib.Path, variables: dict):
 
     text = template.render(**variables)
     print(text)
-    copy_to_clipboard(text)
+    desktop.copy_to_clipboard(text)
     return text
 
 
