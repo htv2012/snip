@@ -6,6 +6,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import tempfile
 
 from . import config, snip
@@ -80,11 +81,18 @@ def main():
         try:
             snippet_file = options.file or select_file(root)
         except ValueError as error:
-            raise SystemExit(str(error))
+            print(f"{error}", file=sys.stderr)
+            return 1
         variables = dict(token.split("=") for token in options.define)
         LOGGER.debug("variables=%r", variables)
-        snip.get(snippet_file, root, variables)
+        try:
+            snip.get(snippet_file, root, variables)
+        except FileNotFoundError:
+            print(f"Snippet file not found: {snippet_file}", file=sys.stderr)
+            return 1
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
