@@ -61,3 +61,18 @@ def test_empty_braces():
     """Test empty braces."""
     template = Template("{{}}")
     assert template.render(foo="bar") == "{{}}"
+
+
+def test_render_non_string():
+    """Render other types of data, not just string."""
+    template = Template("{{bool_var}}, {{int_var}}")
+    assert template.render(bool_var=True, int_var=19) == "True, 19"
+
+
+def test_update_text():
+    """Update text and the names should be updated as well."""
+    template = Template("Hello {{ person }}")
+    assert template.names == {"person"}
+
+    template.text = "{{ flowers }} are {{ color }}"
+    assert template.names == {"flowers", "color"}

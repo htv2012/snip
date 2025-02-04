@@ -1,7 +1,7 @@
 """
-Implement a simple template rendering because the default string.Template
-is missing function `get_identifiers()` for versions prior to 3.11. The
-name `minja` means to be a mini jinja engine.
+Implement a simple template rendering because the default string.Template in
+Python versions prior to 3.11 is did not provide a way to get the names of the
+variables.  The name `minja` means to be a mini jinja engine.
 """
 
 import re
@@ -25,20 +25,23 @@ NAME_PATTERN = re.compile(
 )
 
 
+def _create_replace_function(mapping: dict):
+    def replace(match: re.Match):
+        key = match[1]
+        return str(mapping[key])
+
+    return replace
+
+
 class Template:
     """A simple Jinja-like template rendering class."""
 
     def __init__(self, text: Optional[str] = ""):
-        self.table = {}
         self.text = text
-        self.names = set(NAME_PATTERN.findall(text))
+
+    @property
+    def names(self):
+        return set(NAME_PATTERN.findall(self.text))
 
     def render(self, **kwargs):
-        self.table = kwargs
-        out = NAME_PATTERN.sub(self._replace, self.text)
-        return out
-
-    def _replace(self, match: re.Match) -> str:
-        key = match[1]
-        out = str(self.table[key])
-        return out
+        return NAME_PATTERN.sub(_create_replace_function(kwargs), self.text)
