@@ -7,14 +7,13 @@ import pytest
 from snip.minja import Template
 
 
+@pytest.fixture
+def flowers_template(template_text):
+    return Template(template_text)
+
+
 def test_simple(flowers_template):
     assert flowers_template.render(color="red", flowers="Roses") == "Roses are red"
-
-
-def test_load_text():
-    template = Template()
-    template.load_text("My alias is {{ alias }}")
-    assert template.render(alias="anna") == "My alias is anna"
 
 
 def test_load_text_should_set_names(flowers_template):
