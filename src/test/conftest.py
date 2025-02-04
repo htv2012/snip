@@ -2,8 +2,6 @@ import pathlib
 
 import pytest
 
-from snip.minja import Template
-
 
 @pytest.fixture
 def root(tmp_path: pathlib.Path) -> pathlib.Path:
@@ -39,11 +37,6 @@ def template_text_file(root: pathlib.Path, template_text: str):
     path.write_text(template_text)
     yield path.name
     path.unlink()
-
-
-@pytest.fixture
-def flowers_template(template_text):
-    return Template(template_text)
 
 
 @pytest.fixture(scope="session", autouse=True)

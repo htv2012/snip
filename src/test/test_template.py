@@ -7,14 +7,13 @@ import pytest
 from snip.minja import Template
 
 
+@pytest.fixture
+def flowers_template(template_text):
+    return Template(template_text)
+
+
 def test_simple(flowers_template):
     assert flowers_template.render(color="red", flowers="Roses") == "Roses are red"
-
-
-def test_load_text():
-    template = Template()
-    template.load_text("My alias is {{ alias }}")
-    assert template.render(alias="anna") == "My alias is anna"
 
 
 def test_load_text_should_set_names(flowers_template):
@@ -62,3 +61,18 @@ def test_empty_braces():
     """Test empty braces."""
     template = Template("{{}}")
     assert template.render(foo="bar") == "{{}}"
+
+
+def test_render_non_string():
+    """Render other types of data, not just string."""
+    template = Template("{{bool_var}}, {{int_var}}")
+    assert template.render(bool_var=True, int_var=19) == "True, 19"
+
+
+def test_update_text():
+    """Update text and the names should be updated as well."""
+    template = Template("Hello {{ person }}")
+    assert template.names == {"person"}
+
+    template.text = "{{ flowers }} are {{ color }}"
+    assert template.names == {"flowers", "color"}
