@@ -25,3 +25,7 @@ test: lint format
 
 version:
 	uv run snip --version
+
+### Install this tool locally
+install:
+	uv tool install --upgrade .
