@@ -139,15 +139,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pytest-pythonpath"
-version = "0.7.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pytest" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/46/c1/4b784495bb316962962df191b3c1b2302c60236301406283a9de1470786f/pytest-pythonpath-0.7.3.tar.gz", hash = "sha256:63fc546ace7d2c845c1ee289e8f7a6362c2b6bae497d10c716e58e253e801d62", size = 4498 }
-
-[[package]]
 name = "ruff"
 version = "0.9.6"
 source = { registry = "https://pypi.org/simple" }
@@ -185,7 +176,6 @@ dev = [
     { name = "flake8" },
     { name = "hatchling" },
     { name = "pytest" },
-    { name = "pytest-pythonpath" },
     { name = "ruff" },
 ]
 
@@ -197,7 +187,6 @@ dev = [
     { name = "flake8", specifier = ">=7.1.1" },
     { name = "hatchling", specifier = ">=1.26.3" },
     { name = "pytest", specifier = ">=8.3.4" },
-    { name = "pytest-pythonpath", specifier = ">=0.7.3" },
     { name = "ruff", specifier = ">=0.8.2" },
 ]
 
