@@ -3,7 +3,9 @@ import logging
 import logging.config
 import pathlib
 
-from . import desktop, editor, minja
+import minja
+
+from . import desktop, editor
 
 logging.config.fileConfig(pathlib.Path(__file__).with_name("logging.ini"))
 LOGGER = logging.getLogger("root.snip")
