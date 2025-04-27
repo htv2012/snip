@@ -1,6 +1,6 @@
 .PHONY: all build clean format lint run test version
 
-all: lint format build test run
+all: lint format test
 
 build:
 	uv build
