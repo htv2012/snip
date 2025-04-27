@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from typing import List
 
 from . import config, snip
 from .pathtools import is_empty_dir
@@ -42,7 +43,7 @@ def select_file(root: pathlib.Path):
     return selected
 
 
-def parse_command_line():
+def parse_command_line(args: List[str] = None):
     parser = argparse.ArgumentParser(prog="snip")
     parser.add_argument(
         "-v",
@@ -64,7 +65,7 @@ def parse_command_line():
     put_parser = sub_parser.add_parser("put")
     put_parser.add_argument("filename")
 
-    options = parser.parse_args()
+    options = parser.parse_args(args)
     LOGGER.debug("options: %r", options)
     return options
 
