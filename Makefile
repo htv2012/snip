@@ -21,7 +21,7 @@ run:
 	uv run snip ls
 
 test: lint format
-	uv run pytest -v
+	uv run pytest -s -v
 
 version:
 	uv run snip --version
