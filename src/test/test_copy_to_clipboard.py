@@ -21,15 +21,6 @@ def test_on_darwin(mock_run):
     assert call_args.kwargs["input"] == SAMPLE_TEXT
 
 
-@mock.patch("platform.system", lambda: "Linux")
-@mock.patch("subprocess.run")
-def test_on_linux(mock_run):
-    copy_to_clipboard(SAMPLE_TEXT)
-    call_args = mock_run.call_args
-    assert call_args.args == (["xsel", "-b"],)
-    assert call_args.kwargs["input"] == SAMPLE_TEXT
-
-
 @pytest.fixture
 def xsel_found(monkeypatch, tmp_path):
     cat = shutil.which("cat")
